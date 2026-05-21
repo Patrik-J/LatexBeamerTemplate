@@ -64,6 +64,8 @@
 
 % logo
 \newcommand{\mylogo}{\includegraphics[width=3cm]{logo.png}}
+\newcommand{\titleLogo}{\includegraphics[width=5cm]{titleLogo.png}}
+
 \addtobeamertemplate{background}{}{
     \ifnum\value{framenumber}>1
         \begin{tikzpicture}[remember picture,overlay]
@@ -71,17 +73,13 @@
             at (current page.south east)
             {\mylogo};
         \end{tikzpicture}
+    \else
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[anchor=south, yshift = 10pt] at (current page.south)
+            {\titleLogo};
+        \end{tikzpicture}
     \fi
 }
-
-\newcommand{\titleLogo}{\includegraphics[width=8cm]{titleLogo.png}}
-\addtobeamertemplate{title page}{%
-    \vspace{-2em}
-    \begin{center}
-        \titleLogo
-    \end{center}
-    \vspace{-3em}
-}{}
 
 % TOC entry symbols
 \setbeamertemplate{section in toc}{%
