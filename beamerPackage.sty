@@ -1,9 +1,14 @@
 \usepackage[math-style=ISO, partial=upright, mathup=text]{unicode-math} % math font
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,shadings}
+\usetikzlibrary{patterns,snakes}
+\usetikzlibrary{patterns.meta}
+\usetikzlibrary{arrows.meta}
 
 % init
-\NewDocumentCommand{\InitBeamer}{momomomoO{\today}}{%
+\NewDocumentCommand{\InitBeamer}{m o m o m o m o O{\today}}{%
     \IfNoValueT{#2}{%
         \title{#1}%
     }%
