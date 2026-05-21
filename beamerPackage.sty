@@ -1,0 +1,216 @@
+\usepackage[math-style=ISO, partial=upright, mathup=text]{unicode-math} % math font
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% init
+\NewDocumentCommand{\InitBeamer}{momomomoO{\today}}{%
+    \IfNoValueT{#2}{%
+        \title{#1}%
+    }%
+    \IfNoValueF{#2}{%
+        \title[#2]{#1}%
+    }%
+    \IfNoValueT{#4}{%
+        \subtitle{#3}%
+    }%
+    \IfNoValueF{#4}{%
+        \subtitle[#4]{#3}%
+    }%
+    \IfNoValueT{#6}{%
+        \author{#5}%
+    }%
+    \IfNoValueF{#6}{%
+        \author[#6]{#5}%
+    }%
+    \IfNoValueT{#8}{%
+        \institute{#7}%
+    }%
+    \IfNoValueF{#8}{%
+        \institute[#8]{#7}%
+    }%
+    \date{#9}%
+}
+
+% general theme
+\usetheme{Madrid}
+
+% color theme
+\usecolortheme{beamertheme}
+
+% color definition
+\definecolor{mntfcolor}{HTML}{13574d}
+
+% links
+\hypersetup{
+    colorlinks = true,
+    pdfauthor = {Author},
+    pdftitle = {\LaTeX Beamer Presentation},
+    citecolor = blue,
+    filecolor = black!20!mntfcolor,
+    linkcolor = mntfcolor,
+    urlcolor = mntfcolor,
+}
+
+% beamer colors
+\setbeamercolor{footline title link}{fg=white}
+\addtobeamertemplate{footline}{\hypersetup{linkcolor=white}}{}
+
+\setbeamercolor{itemize item}{fg=mntfcolor}
+\setbeamercolor{itemize subitem}{fg=black}
+
+\setbeamercolor{author in head/foot}{parent=palette primary,bg=}
+\setbeamercolor{title in head/foot}{parent=palette secondary,bg=}
+\setbeamercolor{date in head/foot}{parent=palette tertiary,bg=}
+
+\setbeamercolor{section in head/foot}{parent=palette primary,bg=}
+\setbeamercolor{subsection in head/foot}{parent=palette secondary,bg=}
+
+% itemize
+\setmathfont{New Computer Modern Math}[version=itemfont]
+\setbeamertemplate{itemize item}{\mathversion{itemfont}$\diamond$}
+
+% logo
+\newcommand{\mylogo}{\includegraphics[width=3cm]{logo.png}}
+\addtobeamertemplate{background}{}{
+    \ifnum\value{framenumber}>1
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[anchor=south east, xshift=0pt, yshift=0pt]
+            at (current page.south east)
+            {\mylogo};
+        \end{tikzpicture}
+    \fi
+}
+
+\newcommand{\titleLogo}{\includegraphics[width=8cm]{titleLogo.png}}
+\addtobeamertemplate{title page}{%
+    \vspace{-2em}
+    \begin{center}
+        \titleLogo
+    \end{center}
+    \vspace{-3em}
+}{}
+
+% TOC entry symbols
+\setbeamertemplate{section in toc}{%
+    \bfseries\color{mntfcolor}$\blacktriangleright$~\inserttocsection\par%
+}%
+
+\setbeamertemplate{subsection in toc}{%
+    \hspace*{2em}\color{mntfcolor}$\square$~\inserttocsubsection\par%
+}%
+
+% footer
+\newcommand{\Footer}{%
+    \makeatletter%
+    \setbeamertemplate{footline}%
+    {%
+        \leavevmode%
+        \hbox{%
+            \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
+                \usebeamerfont{title in head/foot}%
+                \insertshortauthor% 
+            \end{beamercolorbox}%
+            \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
+                \usebeamerfont{title in head/foot}%
+                \insertshortinstitute%
+            \end{beamercolorbox}%
+            \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
+                \usebeamerfont{title in head/foot}%
+                % \hypersetup{linkcolor=white}%
+                \textcolor{white}{\insertshorttitle}%
+            \end{beamercolorbox}%
+            \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
+                \usebeamerfont{title in head/foot}%
+                \insertshortdate%
+            \end{beamercolorbox}%
+            \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{institute in head/foot}%
+                \usebeamerfont{title in head/foot}% 
+                \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}% 
+            \end{beamercolorbox}}%
+    }%
+    \makeatother%
+}%
+
+% color gradient
+\colorlet{colorLeft}{mntfcolor}
+\colorlet{colorMiddle}{mntfcolor!80!white}
+\colorlet{colorRight}{mntfcolor!60!white}
+
+\pgfdeclarehorizontalshading[colorLeft,colorMiddle,colorRight]
+{colorGradient}{\paperheight}{
+    color(0pt)=(colorLeft);
+    color(0.6\paperwidth)=(colorMiddle);
+    color(\paperwidth)=(colorRight)
+}
+
+% footer
+\makeatletter%
+\setbeamertemplate{footline}%
+{%
+    \leavevmode%
+    \hypersetup{linkcolor=white}%
+    \setbox\beamer@tempbox=\hbox{%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor\expandafter\beamer@ifempty\expandafter{\beamer@shortinstitute}{}{~~(\insertshortinstitute)}%
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle%
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}%
+            \insertframenumber{} / 17\hspace*{2ex}%
+        \end{beamercolorbox}%
+    }%
+    \beamer@tempdim=\ht\beamer@tempbox%
+    \advance\beamer@tempdim by 4pt%
+    \begin{pgfpicture}{1.7pt}{0pt}{\paperwidth}{20pt}%
+        \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}%
+        \pgfusepath{clip}%
+        \pgftext[left,base]{\pgfuseshading{colorGradient}}%
+    \end{pgfpicture}%
+    \vskip-\beamer@tempdim%
+    \box\beamer@tempbox% 
+}%
+
+% show TOC in between (sub-)sections
+\newcommand{\InBetweenTOC}[1]{%
+    \AtBeginSection[]{%
+        \begin{frame}[noframenumbering]%
+            \frametitle{#1}%
+            \tableofcontents[currentsection, hideothersubsections]%
+        \end{frame}%
+    }%
+}%
+
+\newcommand{\InBetweenSubTOC}[1]{%
+    \AtBeginSubsection[]{%
+        \begin{frame}[noframenumbering]%
+            \frametitle{#1}%
+            \tableofcontents%
+            [%
+                currentsection,%
+                currentsubsection,%
+                subsectionstyle=show/shaded/hide%
+            ]%
+        \end{frame}%
+    }%
+}%
+
+% no header
+\newcommand{\NoHeader}{%
+    \setbeamertemplate{headline}{}%   
+}%
+
+% title page
+\newcommand{\showtitle}{%
+{%
+    \hypersetup{linkcolor=white}%
+    \begin{frame}%
+        \titlepage%
+    \end{frame}%
+}%
+
+% empty navigtion symbols
+\newcommand{\disablenavigationsymbols}{%
+    \beamertemplatenavigationsymbolsempty%
+}%
