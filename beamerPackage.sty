@@ -92,38 +92,6 @@
     \hspace*{2em}\color{mntfcolor}$\square$~\inserttocsubsection\par%
 }%
 
-% footer
-\newcommand{\Footer}{%
-    \makeatletter%
-    \setbeamertemplate{footline}%
-    {%
-        \leavevmode%
-        \hbox{%
-            \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
-                \usebeamerfont{title in head/foot}%
-                \insertshortauthor% 
-            \end{beamercolorbox}%
-            \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
-                \usebeamerfont{title in head/foot}%
-                \insertshortinstitute%
-            \end{beamercolorbox}%
-            \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
-                \usebeamerfont{title in head/foot}%
-                % \hypersetup{linkcolor=white}%
-                \textcolor{white}{\insertshorttitle}%
-            \end{beamercolorbox}%
-            \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{institute in head/foot}%
-                \usebeamerfont{title in head/foot}%
-                \insertshortdate%
-            \end{beamercolorbox}%
-            \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{institute in head/foot}%
-                \usebeamerfont{title in head/foot}% 
-                \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}% 
-            \end{beamercolorbox}}%
-    }%
-    \makeatother%
-}%
-
 % color gradient
 \colorlet{colorLeft}{mntfcolor}
 \colorlet{colorMiddle}{mntfcolor!80!white}
@@ -151,16 +119,15 @@
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
             \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}%
-            \insertframenumber{} / 17\hspace*{2ex}%
+            \insertframenumber{} / \inserttotalframenumber{}\hspace*{2ex}%
         \end{beamercolorbox}%
     }%
     \beamer@tempdim=\ht\beamer@tempbox%
     \advance\beamer@tempdim by 4pt%
-    \begin{pgfpicture}{1.7pt}{0pt}{\paperwidth}{20pt}%
-        \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}%
-        \pgfusepath{clip}%
-        \pgftext[left,base]{\pgfuseshading{colorGradient}}%
-    \end{pgfpicture}%
+    \begin{tikzpicture}[remember picture,overlay]%
+        \path[shade, left color=colorLeft, middle color=colorMiddle, right color=colorRight]%
+        (0,0) rectangle (\paperwidth,\beamer@tempdim);%
+    \end{tikzpicture}%
     \vskip-\beamer@tempdim%
     \box\beamer@tempbox% 
 }%
@@ -196,9 +163,10 @@
 
 % title page
 \newcommand{\showtitle}{%
-{%
-    \hypersetup{linkcolor=white}%
-    \begin{frame}%
-        \titlepage%
-    \end{frame}%
+    {%
+        \hypersetup{linkcolor=white}%
+        \begin{frame}%
+            \titlepage%
+        \end{frame}%
+    }%
 }%
