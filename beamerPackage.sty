@@ -8,32 +8,15 @@
 \usetikzlibrary{arrows.meta}
 
 % init
-\NewDocumentCommand{\InitBeamer}{m o m o m o m o O{\today}}{%
-    \IfNoValueT{#2}{%
-        \title{#1}%
-    }%
-    \IfNoValueF{#2}{%
-        \title[#2]{#1}%
-    }%
-    \IfNoValueT{#4}{%
-        \subtitle{#3}%
-    }%
-    \IfNoValueF{#4}{%
-        \subtitle[#4]{#3}%
-    }%
-    \IfNoValueT{#6}{%
-        \author{#5}%
-    }%
-    \IfNoValueF{#6}{%
-        \author[#6]{#5}%
-    }%
-    \IfNoValueT{#8}{%
-        \institute{#7}%
-    }%
-    \IfNoValueF{#8}{%
-        \institute[#8]{#7}%
-    }%
-    \date{#9}%
+\NewDocumentCommand{\InitBeamer}{momomomoo}{%
+    \IfNoValueTF{#2}{\title{#1}}{\title[#2]{#1}}%
+    \IfNoValueTF{#4}{\subtitle{#3}}{\subtitle[#4]{#3}}%
+    \IfNoValueTF{#6}{\author{#5}}{\author[#6]{#5}}%
+    \IfNoValueTF{#8}{\institute{#7}}{\institute[#8]{#7}}%
+
+    \IfNoValueTF{#9}
+    {\date{\today}}
+    {\date{#9}}%
 }
 
 % general theme
@@ -218,9 +201,4 @@
     \begin{frame}%
         \titlepage%
     \end{frame}%
-}%
-
-% empty navigtion symbols
-\newcommand{\disablenavigationsymbols}{%
-    \beamertemplatenavigationsymbolsempty%
 }%
